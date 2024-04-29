@@ -1,15 +1,26 @@
-
+import { useState } from 'react'
+import PlayerCard from './PlayerCard';
+import PlayerInputs from './PlayerInputs';
+import TeamStatsTable from './TeamStatsTable';
 
 function EditTeam() {
+  const [players, setPlayers] = useState([]);
+
+  const addPlayer = (newPlayer) => {
+    setPlayers([...players, newPlayer]);
+  };
+
   return (
     <div className="p-5">
       <h1>Editing Page</h1>
+      <PlayerInputs onPlayerSubmit={addPlayer} />
+      <PlayerCard />
+      <TeamStatsTable players={players} />
     </div>
   )
 }
 
-
-export default EditTeam
+export default EditTeam;
 
 /*
       --MUST HAVE--

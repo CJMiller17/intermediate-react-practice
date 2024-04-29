@@ -1,18 +1,26 @@
+import { Row } from "react-bootstrap";
+import PlayerCard from "./PlayerCard"
 
 const Title = () => {
   return (
     <h1>
-      Hello World!
+      Look at that awesome Team!
     </h1>
   )
 }
 
 function App() {
   return (
-    <div className="p-5">
+    <div className="p-5 container">
       <Title />
+      <main className="row">
+        <PlayerCard />
+        <PlayerCard />
+        <PlayerCard />
+        <PlayerCard />
+      </main>
     </div>
-  )
+  );
 }
 
 
