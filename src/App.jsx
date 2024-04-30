@@ -1,4 +1,4 @@
-import { Row } from "react-bootstrap";
+
 import PlayerCard from "./PlayerCard"
 
 const Title = () => {

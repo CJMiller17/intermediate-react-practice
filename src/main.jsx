@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
@@ -10,13 +10,13 @@ import {
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
-import EditTeam from './EditTeam'
 import App from './App'
 import ErrorPage from './ErrorPage'
 import Header from './Header'
 import Footer from './Footer'
+import EditTeam from "./EditTeam";
 
-
+//Creates context for the new player
 function Layout() {
   return (
       <>
@@ -45,8 +45,22 @@ const router = createBrowserRouter([
       },
     ]
   }
-])
+]);
+
+export const NewPlayerContext = createContext();
+
+export const NewPlayerProvider = ({ children }) => {
+  const [newPlayerName, setNewPlayerName] = useState("");
+
+  return (
+    <NewPlayerContext.Provider value={{ newPlayerName }}>
+      {children}
+    </NewPlayerContext.Provider>
+  );
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <NewPlayerProvider>
+    <RouterProvider router={router} />
+  </NewPlayerProvider>
 )

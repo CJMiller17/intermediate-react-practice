@@ -1,4 +1,5 @@
-import { useState, useReducer } from "react";
+import React, { useState, useReducer, useContext } from "react";
+import { NewPlayerContext } from './main';
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
@@ -27,22 +28,27 @@ const reducerForStats = (state, action) => {
 }
 
 function PlayerInputs() {
+    const { newPlayerName, setNewPlayerName } = useContext(NewPlayerContext);
     const [name, setName] = useState("");
     const [state, dispatch] = useReducer(reducerForStats, initialStats);
 
     const handleNameChange = ((event) => {
         setName(event.target.value);
-        onNameChange(event.target.value); //This keeps the parent/child info on same page?
+        console.log("Input Name: ", name);
     });
 
-    const 
-    
     const handleSliderChange = (type, value) => {
-        if (value >= 1 && value <= 8) {
-            dispatch({ type: type, sliderValue: value });
-        }
+      if (value >= 1 && value <= 8) {
+        dispatch({ type: type, sliderValue: value });
+      }
     };
-
+    
+    const handleSubmit = () => {
+        setNewPlayerName(name);
+        //Clears input field after submission
+        setName("");
+    };
+    
   return (
     <Card style={{ width: "18rem" }}>
       <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
@@ -93,8 +99,7 @@ function PlayerInputs() {
             onChange={(event) =>
               handleSliderChange("setHealth", parseInt(event.target.value))
             }
-          />{" "}
-          {/* Sliders return string numbers */}
+          />
         </ListGroup.Item>
         <ListGroup.Item>
           <Form.Label>Attack :</Form.Label>
@@ -120,7 +125,7 @@ function PlayerInputs() {
       <Card.Body>
         <Button variant="outline-dark">Randomize Stats</Button>
       </Card.Body>
-      <Button variant="outline-success">Submit</Button>
+      <Button variant="outline-success" onClick={handleSubmit}>Submit</Button>
     </Card>
   );
 }

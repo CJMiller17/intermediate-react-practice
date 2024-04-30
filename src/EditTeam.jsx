@@ -1,21 +1,16 @@
-import { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import PlayerCard from './PlayerCard';
 import PlayerInputs from './PlayerInputs';
 import TeamStatsTable from './TeamStatsTable';
 
 function EditTeam() {
-  const [players, setPlayers] = useState([]);
-
-  const addPlayer = (newPlayer) => {
-    setPlayers([...players, newPlayer]);
-  };
 
   return (
     <div className="p-5">
       <h1>Editing Page</h1>
-      <PlayerInputs onPlayerSubmit={addPlayer} />
+      <PlayerInputs onPlayerSubmit={setNewPlayerName} />
       <PlayerCard />
-      <TeamStatsTable players={players} />
+      <TeamStatsTable newPlayerName={newPlayerName} />
     </div>
   )
 }
