@@ -50,7 +50,7 @@ const router = createBrowserRouter([
 export const NewPlayerContext = createContext(null);
 
 export const NewPlayerProvider = ({ children }) => {
-  const [newPlayerArray, setNewPlayerArray] = useState([{name:"nathan"}]);
+  const [newPlayerArray, setNewPlayerArray] = useState([]);
 
   return (
     <NewPlayerContext.Provider value={{ newPlayerArray, setNewPlayerArray }}>
