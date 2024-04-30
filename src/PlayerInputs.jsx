@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useContext } from "react";
+import React, { useState, useReducer, useContext, useEffect } from "react";
 import { NewPlayerContext } from './main';
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
@@ -28,9 +28,13 @@ const reducerForStats = (state, action) => {
 }
 
 function PlayerInputs() {
-    const { newPlayerName, setNewPlayerName } = useContext(NewPlayerContext);
+    const { newPlayerArray, setNewPlayerArray} = useContext(NewPlayerContext);
     const [name, setName] = useState("");
-    const [state, dispatch] = useReducer(reducerForStats, initialStats);
+  const [state, dispatch] = useReducer(reducerForStats, initialStats);
+  
+  useEffect(() => {
+    console.log("new Player name: ", newPlayerArray);
+  }, [newPlayerArray])
 
     const handleNameChange = ((event) => {
         setName(event.target.value);
@@ -42,10 +46,14 @@ function PlayerInputs() {
         dispatch({ type: type, sliderValue: value });
       }
     };
-    
+  
+  
+  
     const handleSubmit = () => {
-        setNewPlayerName(name);
-        //Clears input field after submission
+      setNewPlayerArray([...newPlayerArray, { name: name, health: state.health }]);
+      
+      //Clears input field after submission
+      // console.log("new player name: ", newPlayerArray[0].name);
         setName("");
     };
     

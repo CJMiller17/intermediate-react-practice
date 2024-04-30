@@ -8,9 +8,9 @@ function EditTeam() {
   return (
     <div className="p-5">
       <h1>Editing Page</h1>
-      <PlayerInputs onPlayerSubmit={setNewPlayerName} />
+      <PlayerInputs />
       <PlayerCard />
-      <TeamStatsTable newPlayerName={newPlayerName} />
+      <TeamStatsTable />
     </div>
   )
 }

@@ -47,13 +47,13 @@ const router = createBrowserRouter([
   }
 ]);
 
-export const NewPlayerContext = createContext();
+export const NewPlayerContext = createContext(null);
 
 export const NewPlayerProvider = ({ children }) => {
-  const [newPlayerName, setNewPlayerName] = useState("");
+  const [newPlayerArray, setNewPlayerArray] = useState([{name:"nathan"}]);
 
   return (
-    <NewPlayerContext.Provider value={{ newPlayerName }}>
+    <NewPlayerContext.Provider value={{ newPlayerArray, setNewPlayerArray }}>
       {children}
     </NewPlayerContext.Provider>
   );
