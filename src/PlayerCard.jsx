@@ -1,9 +1,14 @@
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 
-function PlayerCard({playerName, playerHealth}) {
+/*
+These are basically Reacts version of parameters. The imported component
+will look for these to be specified just like a function would expect params
+to be passed
+*/
+function PlayerCard({playerName, playerHealth, playerAttack, playerSpeed}) {
   return (
-    <Card style={{width: "10rem" }}>
+    <Card style={{ width: "10rem" }}>
       <Card.Img variant="top" src="holder.js/100px180?text=Image cap" />
       <Card.Body>
         <Card.Title>{playerName}</Card.Title>
@@ -12,9 +17,10 @@ function PlayerCard({playerName, playerHealth}) {
         </Card.Text>
       </Card.Body>
       <ListGroup className="list-group-flush">
+        {/* These values come comes from App.jsx's player card pushes */}
         <ListGroup.Item>Health : {playerHealth}</ListGroup.Item>
-        <ListGroup.Item>Attack : 0</ListGroup.Item>
-        <ListGroup.Item>Speed : 0</ListGroup.Item>
+        <ListGroup.Item>Attack : {playerAttack}</ListGroup.Item>
+        <ListGroup.Item>Speed : {playerSpeed}</ListGroup.Item>
       </ListGroup>
     </Card>
   );

@@ -18,8 +18,14 @@ function App() {
   for (let i = 0; i < newPlayerArray.length; i++) {
       
     players.push(
-       <PlayerCard playerName={newPlayerArray[i].name} playerHealth={newPlayerArray[i].health}/>
-      )
+      <PlayerCard
+        playerName={newPlayerArray[i].name}
+        playerHealth={newPlayerArray[i].health}
+        playerAttack={newPlayerArray[i].attack}
+        playerSpeed={newPlayerArray[i].speed}
+        playerUniqueId={newPlayerArray[i].id}
+      />
+    );
     
 
   }
@@ -27,7 +33,10 @@ function App() {
     <div className="p-5 container">
       <Title />
       <main className="row">
-        {players.map(e => e)}
+        {/* Mapping over players and generating cards */}
+        {players.map((playerCard, index) => (
+          <div key={index}>{playerCard}</div>
+        ))}
       </main>
     </div>
   );

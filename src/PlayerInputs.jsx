@@ -8,12 +8,14 @@ import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
 import Button from "react-bootstrap/Button";
 
+//These are the initial stats of the player, which are updated via the sliders through the reducer function
 const initialStats = {
     health: 3,
     attach: 3,
     speed: 2,
 };
 
+//This the reducer constant that keeps track of state and receives the info from the completed action
 const reducerForStats = (state, action) => {
     switch (action.type) {
         case "setHealth":
@@ -27,33 +29,49 @@ const reducerForStats = (state, action) => {
     }
 }
 
+//This massive function has several state variables, listeners, and inputs that communicate
 function PlayerInputs() {
+    //This "pulls in" the array and setArray from main.jsx through the context provider
     const { newPlayerArray, setNewPlayerArray} = useContext(NewPlayerContext);
+    
+    //This sets state for the name variable to keep track of it
     const [name, setName] = useState("");
-  const [state, dispatch] = useReducer(reducerForStats, initialStats);
+    
+  //This is the reducer function that has initialStats for the starting state. It then dispatches
+  //an action to be run through the reducerForStats const which is switchCase.
+    const [state, dispatch] = useReducer(reducerForStats, initialStats);
   
+  //This useEffect clearly wasn't doing anything
+  /*
   useEffect(() => {
     console.log("new Player name: ", newPlayerArray);
   }, [newPlayerArray])
-
+  */
+  
+    //Updates the name through setName to the value of the input field, letter by letter
     const handleNameChange = ((event) => {
         setName(event.target.value);
         console.log("Input Name: ", name);
     });
 
+  //The type is a string that is passed to the switch case. The slider value 
+  //is passed to update the corresponding stat
     const handleSliderChange = (type, value) => {
+      //The if statement is not strictly necessary but can prevent bugs as a guardian function
       if (value >= 1 && value <= 8) {
         dispatch({ type: type, sliderValue: value });
       }
     };
-  
-  
-  
+
+    //Runs when submit button is pressed
     const handleSubmit = () => {
-      setNewPlayerArray([...newPlayerArray, { name: name, health: state.health }]);
-      
+      //Actually uses the array that was "pulled in". Opens it up and passes object key:value pairs.
+      //Truth be told, I don't fully understand this, because I can't "see" the arrays creation
+      //This uses the spread operator to create a copy pof the existing array, open it up, and insert a new object in it
+      setNewPlayerArray([...newPlayerArray, { name: name, health: state.health, attack: state.attack, speed: state.speed}]);
+      //Create an id in the global state and then bump the number by one.
+    
       //Clears input field after submission
-      // console.log("new player name: ", newPlayerArray[0].name);
         setName("");
     };
     
@@ -79,7 +97,12 @@ function PlayerInputs() {
             <Row>
               <Col>
                 <p>Player Name :</p>
-                <Form.Control placeholder="ex. Wolverine" value={name} onChange={handleNameChange} />
+                <Form.Control
+                  placeholder="ex. Wolverine"
+                  //Why is name used and not setName?
+                  value={name}
+                  onChange={handleNameChange}
+                />
                 <Button variant="outline-danger">Random</Button>
               </Col>
             </Row>
@@ -103,6 +126,7 @@ function PlayerInputs() {
           <Form.Range
             min={1}
             max={8}
+            //Where is the state object? I just get confused by what I can't "see"
             value={state.health}
             onChange={(event) =>
               handleSliderChange("setHealth", parseInt(event.target.value))
@@ -114,6 +138,7 @@ function PlayerInputs() {
           <Form.Range
             min={1}
             max={8}
+            //Where is the state object? I just get confused by what I can't "see"
             value={state.attack}
             onChange={(event) =>
               handleSliderChange("setAttack", parseInt(event.target.value))
@@ -122,18 +147,23 @@ function PlayerInputs() {
         </ListGroup.Item>
         <ListGroup.Item>
           <Form.Label>Speed :</Form.Label>
-                  <Form.Range
-                      min={1}
-                      max={8}
-                      value={state.speed}
-                      onChange={(event) =>
-                          handleSliderChange("setSpeed", parseInt(event.target.value))} />
+          <Form.Range
+            min={1}
+            max={8}
+            //Where is the state object? I just get confused by what I can't "see"
+            value={state.speed}
+            onChange={(event) =>
+              handleSliderChange("setSpeed", parseInt(event.target.value))
+            }
+          />
         </ListGroup.Item>
       </ListGroup>
       <Card.Body>
         <Button variant="outline-dark">Randomize Stats</Button>
       </Card.Body>
-      <Button variant="outline-success" onClick={handleSubmit}>Submit</Button>
+      <Button variant="outline-success" onClick={handleSubmit}>
+        Submit
+      </Button>
     </Card>
   );
 }
